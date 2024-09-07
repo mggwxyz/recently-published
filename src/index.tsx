@@ -8,7 +8,7 @@ import {recentlyPublishedVersions, recentlyPublishedPackages} from './npmCommand
 async function run() {
   const argv = await yargs(hideBin(process.argv)).argv;
 
-  const packageName = argv._[0];
+  const packageName = argv._[0] as string;
 
   if (!packageName) {
     await recentlyPublishedPackages();
