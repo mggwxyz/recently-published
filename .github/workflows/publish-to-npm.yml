@@ -1,11 +1,11 @@
 name: Publish to NPM
 
 on:
-  release:
+  push:
     types: [published]
 
 jobs:
-  release:
+  push:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
