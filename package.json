@@ -29,7 +29,8 @@
     "prettier": "3.3.3",
     "tsup": "^8.2.4",
     "typescript": "^5.5.4",
-    "typescript-eslint": "^8.4.0"
+    "typescript-eslint": "^8.4.0",
+    "vitest": "^2.0.5"
   },
   "dependencies": {
     "ink": "^5.0.1",
