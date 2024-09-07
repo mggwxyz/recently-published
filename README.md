@@ -1,15 +1,9 @@
 # recently-published
 
-To install dependencies:
+The purpose of this package is to provide a simple CLI tool to the most recently published versions of npm packages.
 
+To use simply run:
 ```bash
-bun install
+npx recently-published axios
 ```
 
-To run:
-
-```bash
-bun run index.ts
-```
-
-This project was created using `bun init` in bun v1.1.26. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
