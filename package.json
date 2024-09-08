@@ -21,7 +21,8 @@
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "scripts": {
-    "build": "tsup"
+    "build": "tsup",
+    "prepublishOnly": "pnpm build"
   },
   "files": [
     "dist"
