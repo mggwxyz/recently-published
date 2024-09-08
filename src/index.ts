@@ -1,20 +1,36 @@
 #!/usr/bin/env node
 
-import yargs from 'yargs/yargs';
-import {hideBin} from 'yargs/helpers';
+import {Command} from 'commander';
+import * as pkg from '../package.json';
 
 import {recentlyPublishedVersions, recentlyPublishedPackages} from './utils/npmUtil.tsx';
 
-async function run() {
-  const argv = await yargs(hideBin(process.argv)).argv;
+const program = new Command();
 
-  const packageName = argv._[0] as string;
+export type ProgramOptions = {
+  display: string;
+  excludePrerelease: boolean;
+};
 
-  if (!packageName) {
-    await recentlyPublishedPackages();
-  } else {
-    await recentlyPublishedVersions(packageName);
-  }
-}
+program
+  .name(pkg.name)
+  .version(pkg.version)
+  .argument('packageName', 'Package whose recently published versions you want to see')
+  .option(
+    '-d, --display <number>',
+    '# of recently published versions you would like displayed or "all" if you want to display all of them',
+    '5'
+  )
+  .option(
+    '-ep, --excludePrerelease',
+    'Exclude prerelease versions from the list of recently published versions'
+  )
+  .action(async (packageName: string, options: ProgramOptions) => {
+    if (!packageName) {
+      await recentlyPublishedPackages(options);
+    } else {
+      await recentlyPublishedVersions(packageName, options);
+    }
+  });
 
-run();
+program.parse(process.argv);

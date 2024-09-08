@@ -4,23 +4,27 @@ import {formatDate, getRelativeTimeDescription} from './timeUtils.ts';
 import Table, {EmptySkeleton} from '../components/Table.tsx';
 import {batchProcessPromises, execPromise} from './promiseUtils.ts';
 import Spinner from 'ink-spinner';
+import {ProgramOptions} from '../index.ts';
+import {filterPublishedVersions, getDisplayed} from './arrayUtils.ts';
 
 type NPMVersionsObject = {
   [version: string]: string;
 };
 
-type PublishedVersion = {
-  version: string;
+export type PublishedVersion = {
   publishedDate: Date;
-  [key: string]: unknown;
+  raw?: string | undefined;
+  loose?: boolean | undefined;
+  options?: unknown | undefined;
+  major?: number | undefined;
+  minor?: number | undefined;
+  patch?: number | undefined;
+  version: string;
+  build?: readonly string[] | undefined;
+  prerelease?: readonly (string | number)[] | undefined;
 };
 
-const options = {
-  limit: 5,
-  includePrerelease: false
-};
-
-export const recentlyPublishedVersions = async (packageName: string) => {
+export const recentlyPublishedVersions = async (packageName: string, options: ProgramOptions) => {
   const {stdout} = await execPromise(`npm view ${packageName} time --json`);
 
   const versions: NPMVersionsObject = JSON.parse(stdout);
@@ -28,17 +32,23 @@ export const recentlyPublishedVersions = async (packageName: string) => {
   delete versions.created;
   delete versions.modified;
 
-  const versionsSortedByPublishDate: PublishedVersion[] = Object.entries(versions)
-    .map(([version, timestamp]) => ({
+  const allPublishedVersions: PublishedVersion[] = Object.entries(versions).map(
+    ([version, timestamp]) => ({
       version,
       ...semverParse(version),
       publishedDate: new Date(timestamp)
-    }))
-    .sort((a, b) => b.publishedDate.getTime() - a.publishedDate.getTime());
+    })
+  );
 
-  const mostRecent = versionsSortedByPublishDate.slice(0, 5);
+  const filteredPublishedVersions = filterPublishedVersions(allPublishedVersions, options);
 
-  const tableData = mostRecent?.map(({version, publishedDate}) => ({
+  const versionsSortedByPublishDate = filteredPublishedVersions.sort(
+    (a, b) => b.publishedDate.getTime() - a.publishedDate.getTime()
+  );
+
+  const displayedVersions = getDisplayed(versionsSortedByPublishDate, options);
+
+  const tableData = displayedVersions?.map(({version, publishedDate}) => ({
     Version: version,
     Published: getRelativeTimeDescription(publishedDate),
     Date: formatDate(publishedDate)
@@ -55,7 +65,7 @@ export const recentlyPublishedVersions = async (packageName: string) => {
   );
 };
 
-export const recentlyPublishedPackages = async () => {
+export const recentlyPublishedPackages = async (options: ProgramOptions) => {
   const {stdout} = await execPromise('npm list --json');
 
   const npmListResponse: {dependencies: object} = JSON.parse(stdout);
@@ -86,16 +96,18 @@ export const recentlyPublishedPackages = async () => {
     return stdout.replace(/[\n\r]/g, '');
   });
 
-  const sortedItems = items
-    ?.map((item, index) => {
-      item.publishedDate = new Date(finalResults[index]);
-      return item;
-    })
-    .sort((a, b) => b.publishedDate.getTime() - a.publishedDate.getTime());
+  const versions = items?.map((item, index) => {
+    item.publishedDate = new Date(finalResults[index]);
+    return item;
+  });
 
-  const mostRecent = sortedItems.slice(0, 5);
+  const versionsSortedByPublishDate = versions.sort(
+    (a, b) => b.publishedDate.getTime() - a.publishedDate.getTime()
+  );
 
-  const tableData = mostRecent?.map(({name, version, publishedDate}) => ({
+  const displayedVersions = getDisplayed(versionsSortedByPublishDate, options);
+
+  const tableData = displayedVersions?.map(({name, version, publishedDate}) => ({
     Name: name,
     Version: version,
     Published: getRelativeTimeDescription(publishedDate),
