@@ -1,5 +1,5 @@
 import {ProgramOptions} from '../index.ts';
-import {PublishedVersion} from './npmUtil.tsx';
+import {PublishedVersion} from './npmUtils.ts';
 
 export const getDisplayed = <T>(array: T[], options: ProgramOptions): T[] => {
   if (options.display === 'all') {

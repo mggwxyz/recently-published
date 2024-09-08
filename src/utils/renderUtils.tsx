@@ -1,44 +1,22 @@
-import {Box, render, Text} from 'ink';
-import semverParse from 'semver/functions/parse.js';
-import {formatDate, getRelativeTimeDescription} from './timeUtils.ts';
-import Table, {EmptySkeleton} from '../components/Table.tsx';
-import {batchProcessPromises, execPromise} from './promiseUtils.ts';
-import Spinner from 'ink-spinner';
 import {ProgramOptions} from '../index.ts';
 import {filterPublishedVersions, getDisplayed} from './arrayUtils.ts';
+import {formatDate, getRelativeTimeDescription} from './timeUtils.ts';
+import Table, {EmptySkeleton} from '../components/Table.tsx';
+import {
+  getInstalledPackagesInCurrentDirectory,
+  getPackagesPublishedVersionsFromNPM,
+  PublishedVersion
+} from './npmUtils.ts';
+import {render, Box, Text} from 'ink';
+import {batchProcessPromises, execPromise} from './promiseUtils.ts';
+import Spinner from 'ink-spinner';
 
-type NPMVersionsObject = {
-  [version: string]: string;
-};
-
-export type PublishedVersion = {
-  publishedDate: Date;
-  raw?: string | undefined;
-  loose?: boolean | undefined;
-  options?: unknown | undefined;
-  major?: number | undefined;
-  minor?: number | undefined;
-  patch?: number | undefined;
-  version: string;
-  build?: readonly string[] | undefined;
-  prerelease?: readonly (string | number)[] | undefined;
-};
-
-export const recentlyPublishedVersions = async (packageName: string, options: ProgramOptions) => {
-  const {stdout} = await execPromise(`npm view ${packageName} time --json`);
-
-  const versions: NPMVersionsObject = JSON.parse(stdout);
-
-  delete versions.created;
-  delete versions.modified;
-
-  const allPublishedVersions: PublishedVersion[] = Object.entries(versions).map(
-    ([version, timestamp]) => ({
-      version,
-      ...semverParse(version),
-      publishedDate: new Date(timestamp)
-    })
-  );
+export const renderPackagesRecentlyPublishedVersions = async (
+  packageName: string,
+  options: ProgramOptions
+) => {
+  const allPublishedVersions: PublishedVersion[] =
+    await getPackagesPublishedVersionsFromNPM(packageName);
 
   const filteredPublishedVersions = filterPublishedVersions(allPublishedVersions, options);
 
@@ -65,19 +43,8 @@ export const recentlyPublishedVersions = async (packageName: string, options: Pr
   );
 };
 
-export const recentlyPublishedPackages = async (options: ProgramOptions) => {
-  const {stdout} = await execPromise('npm list --json');
-
-  const npmListResponse: {dependencies: object} = JSON.parse(stdout);
-
-  if (!npmListResponse.dependencies) {
-    throw new Error('No installed packages found in this directory');
-  }
-
-  const items = Object.entries(npmListResponse.dependencies).map(([name, details]) => ({
-    name,
-    ...details
-  }));
+export const renderInstalledPackageVersionsRecentlyPublished = async (options: ProgramOptions) => {
+  const installedPackages = await getInstalledPackagesInCurrentDirectory();
 
   render(
     <Text>
@@ -88,7 +55,7 @@ export const recentlyPublishedPackages = async (options: ProgramOptions) => {
     </Text>
   );
 
-  const results = await batchProcessPromises(items, 100, ({name, version}) => {
+  const results = await batchProcessPromises(installedPackages, 100, ({name, version}) => {
     return execPromise(`npm view ${name} time'[${version}]'`);
   });
 
@@ -96,7 +63,7 @@ export const recentlyPublishedPackages = async (options: ProgramOptions) => {
     return stdout.replace(/[\n\r]/g, '');
   });
 
-  const versions = items?.map((item, index) => {
+  const versions = installedPackages?.map((item, index) => {
     item.publishedDate = new Date(finalResults[index]);
     return item;
   });

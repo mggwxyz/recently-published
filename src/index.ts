@@ -3,7 +3,11 @@
 import {Command} from 'commander';
 import * as pkg from '../package.json';
 
-import {recentlyPublishedVersions, recentlyPublishedPackages} from './utils/npmUtil.tsx';
+import {validatePackageInput} from './utils/npmUtils.ts';
+import {
+  renderInstalledPackageVersionsRecentlyPublished,
+  renderPackagesRecentlyPublishedVersions
+} from './utils/renderUtils.tsx';
 
 const program = new Command();
 
@@ -29,10 +33,17 @@ program
     'Exclude prerelease versions from the list of recently published versions'
   )
   .action(async (optionalPackageName: string, options: ProgramOptions) => {
+    if (!validatePackageInput(optionalPackageName)) {
+      console.error(
+        'Invalid input. Please provide a valid npm package name (including scope). Versions ranges are not supported.'
+      );
+      process.exit(1); // Exit with an error code
+    }
+
     if (!optionalPackageName) {
-      await recentlyPublishedPackages(options);
+      await renderInstalledPackageVersionsRecentlyPublished(options);
     } else {
-      await recentlyPublishedVersions(optionalPackageName, options);
+      await renderPackagesRecentlyPublishedVersions(optionalPackageName, options);
     }
   });
 
