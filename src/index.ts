@@ -3,7 +3,7 @@
 import yargs from 'yargs/yargs';
 import {hideBin} from 'yargs/helpers';
 
-import {recentlyPublishedVersions, recentlyPublishedPackages} from './npmCommands.tsx';
+import {recentlyPublishedVersions, recentlyPublishedPackages} from './utils/npmUtil.tsx';
 
 async function run() {
   const argv = await yargs(hideBin(process.argv)).argv;

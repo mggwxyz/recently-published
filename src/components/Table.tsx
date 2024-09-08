@@ -28,7 +28,7 @@ export type TableProps<T extends ScalarDict> = {
   /**
    * Header component.
    */
-  header: (props: React.PropsWithChildren<{}>) => JSX.Element;
+  header: (props: React.PropsWithChildren<object>) => JSX.Element;
   /**
    * Component used to render a cell in the table.
    */
@@ -36,7 +36,7 @@ export type TableProps<T extends ScalarDict> = {
   /**
    * Component used to render the skeleton of the table.
    */
-  skeleton: (props: React.PropsWithChildren<{}>) => JSX.Element;
+  skeleton: (props: React.PropsWithChildren<object>) => JSX.Element;
 };
 
 /* Table */
@@ -85,13 +85,13 @@ export default class Table<T extends ScalarDict> extends React.Component<
   getColumns(): Column<T>[] {
     const {columns, padding} = this.getConfig();
 
-    const widths: Column<T>[] = columns.map(key => {
+    return columns.map(key => {
       const header = String(key).length;
       /* Get the width of each cell in the column */
       const data = this.props.data.map(data => {
         const value = data[key];
 
-        if (value == undefined || value == null) return 0;
+        if (value == undefined) return 0;
         return String(value).length;
       });
 
@@ -104,8 +104,6 @@ export default class Table<T extends ScalarDict> extends React.Component<
         key: String(key)
       };
     });
-
-    return widths;
   }
 
   /**
@@ -114,9 +112,7 @@ export default class Table<T extends ScalarDict> extends React.Component<
   getHeadings(): Partial<T> {
     const {columns} = this.getConfig();
 
-    const headings: Partial<T> = columns.reduce((acc, column) => ({...acc, [column]: column}), {});
-
-    return headings;
+    return columns.reduce((acc, column) => ({...acc, [column]: column}), {});
   }
 
   /* Rendering utilities */
@@ -241,7 +237,7 @@ type RowConfig = {
    * Component used to render skeleton in the row.
    */
   skeleton: {
-    component: (props: React.PropsWithChildren<{}>) => JSX.Element;
+    component: (props: React.PropsWithChildren<object>) => JSX.Element;
     /**
      * Characters used in skeleton.
      *    |             |
@@ -294,7 +290,7 @@ function row<T extends ScalarDict>(config: RowConfig): (props: RowProps<T>) => J
           // content
           const value = props.data[column.column];
 
-          if (value == undefined || value == null) {
+          if (value == undefined) {
             const key = `${props.key}-empty-${column.key}`;
 
             return (
@@ -327,7 +323,7 @@ function row<T extends ScalarDict>(config: RowConfig): (props: RowProps<T>) => J
 /**
  * Renders the header of a table.
  */
-export function Header(props: React.PropsWithChildren<{}>) {
+export function Header(props: React.PropsWithChildren<object>) {
   return (
     <Text bold color='blue'>
       {props.children}
@@ -345,11 +341,11 @@ export function Cell(props: CellProps) {
 /**
  * Renders the scaffold of the table.
  */
-export function Skeleton(props: React.PropsWithChildren<{}>) {
+export function Skeleton(props: React.PropsWithChildren<object>) {
   return <Text bold>{props.children}</Text>;
 }
 
-export const EmptySkeleton: (props: {children: ReactNode}) => Element = () => <></>;
+export const EmptySkeleton: (props: React.PropsWithChildren<object>) => JSX.Element = () => <></>;
 
 /* Utility functions */
 
@@ -361,16 +357,14 @@ function intersperse<T, I>(
 
   elements: T[]
 ): (T | I)[] {
-  // Intersparse by reducing from left.
-  const interspersed: (T | I)[] = elements.reduce(
+  // Intersperse by reducing from left.
+  return elements.reduce(
     (acc, element, index) => {
       // Only add element if it's the first one.
       if (acc.length === 0) return [element];
-      // Add the intersparser as well otherwise.
+      // Add the intersperser as well otherwise.
       return [...acc, intersperser(index), element];
     },
     [] as (T | I)[]
   );
-
-  return interspersed;
 }
