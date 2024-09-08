@@ -15,21 +15,24 @@ export type ProgramOptions = {
 program
   .name(pkg.name)
   .version(pkg.version)
-  .argument('packageName', 'Package whose recently published versions you want to see')
+  .argument(
+    '[optionalPackageName]',
+    'Optional package name whose recently published versions you want to see. If not provided, will display recently published packages installed in the current directory.'
+  )
   .option(
     '-d, --display <number>',
-    '# of recently published versions you would like displayed or "all" if you want to display all of them',
+    'Number of recently published versions you would like displayed or "all" if you want to display all of them',
     '5'
   )
   .option(
     '-ep, --excludePrerelease',
     'Exclude prerelease versions from the list of recently published versions'
   )
-  .action(async (packageName: string, options: ProgramOptions) => {
-    if (!packageName) {
+  .action(async (optionalPackageName: string, options: ProgramOptions) => {
+    if (!optionalPackageName) {
       await recentlyPublishedPackages(options);
     } else {
-      await recentlyPublishedVersions(packageName, options);
+      await recentlyPublishedVersions(optionalPackageName, options);
     }
   });
 
