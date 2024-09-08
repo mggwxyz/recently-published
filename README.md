@@ -1,6 +1,6 @@
 # recently-published
 
-A simple CLI tool to get the most recently published versions of a package on npm or see which install package versions were most recently published.
+A simple CLI tool to get the most recently published versions of a package on npm or see which installed package versions were most recently published.
 
 ## Usage
 
