@@ -14,8 +14,8 @@ Options:
   -V, --version             output the version number
   -d, --display <number>    Number of recently published versions you would like displayed or "all" if you want to display all of them (default: "5")
   -ep, --excludePrerelease  Exclude prerelease versions from the list of recently published versions
+  --json                    Output the result in JSON format
   -h, --help                display help for command
-
 ```
 
 ## Examples

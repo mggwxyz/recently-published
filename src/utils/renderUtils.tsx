@@ -34,6 +34,7 @@ export const renderPackagesRecentlyPublishedVersions = async (
   );
 
   if (options.json) {
+    render(null);
     console.log(JSON.stringify(displayedVersions, null, 2));
     return;
   }
@@ -89,6 +90,7 @@ export const renderInstalledPackageVersionsRecentlyPublished = async (options: P
   const displayedVersions = getDisplayed(versionsSortedByPublishDate, options);
 
   if (options.json) {
+    render(null);
     console.log(JSON.stringify(displayedVersions, null, 2));
     return;
   }
