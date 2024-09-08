@@ -21,6 +21,8 @@
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "scripts": {
+    "test": "vitest",
+    "prebuild": "npm run test",
     "build": "tsup",
     "prepublishOnly": "pnpm build"
   },
@@ -38,12 +40,15 @@
     "@types/object-hash": "^3.0.6",
     "@types/react": "^18.3.5",
     "@types/semver": "^7.5.8",
+    "@types/validate-npm-package-name": "^4.0.2",
     "@typescript-eslint/parser": "^8.4.0",
     "eslint": "^9.10.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
+    "execa": "^9.3.1",
     "prettier": "3.3.3",
     "tsup": "^8.2.4",
+    "tsx": "^4.19.0",
     "typescript": "^5.5.4",
     "typescript-eslint": "^8.4.0",
     "vitest": "^2.0.5"

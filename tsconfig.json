@@ -7,6 +7,9 @@
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    "rootDir": "src",
+    "outDir": "dist",
+    "types": ["vitest/globals"]
   }
 }

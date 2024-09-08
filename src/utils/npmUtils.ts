@@ -8,7 +8,7 @@ type NPMVersionsObject = {
 };
 
 export type PublishedVersion = {
-  publishedDate: Date;
+  publishDate: Date;
   raw?: string | undefined;
   loose?: boolean | undefined;
   options?: unknown | undefined;
@@ -32,7 +32,7 @@ export const getPackagesPublishedVersionsFromNPM = async (packageName: string) =
     return Object.entries(versions).map(([version, timestamp]) => ({
       version,
       ...semverParse(version),
-      publishedDate: new Date(timestamp)
+      publishDate: new Date(timestamp)
     }));
   } catch (error: unknown) {
     console.error((error as Error).message);

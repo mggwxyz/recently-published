@@ -21,16 +21,30 @@ export const renderPackagesRecentlyPublishedVersions = async (
   const filteredPublishedVersions = filterPublishedVersions(allPublishedVersions, options);
 
   const versionsSortedByPublishDate = filteredPublishedVersions.sort(
-    (a, b) => b.publishedDate.getTime() - a.publishedDate.getTime()
+    (a, b) => b.publishDate.getTime() - a.publishDate.getTime()
   );
 
-  const displayedVersions = getDisplayed(versionsSortedByPublishDate, options);
+  const displayedVersions = getDisplayed(versionsSortedByPublishDate, options).map(
+    ({version, publishDate}) => ({
+      version,
+      publishDate,
+      relativePublishDate: getRelativeTimeDescription(publishDate),
+      formattedPublishDate: formatDate(publishDate)
+    })
+  );
 
-  const tableData = displayedVersions?.map(({version, publishedDate}) => ({
-    Version: version,
-    Published: getRelativeTimeDescription(publishedDate),
-    Date: formatDate(publishedDate)
-  }));
+  if (options.json) {
+    console.log(JSON.stringify(displayedVersions, null, 2));
+    return;
+  }
+
+  const tableData = displayedVersions?.map(
+    ({version, relativePublishDate, formattedPublishDate}) => ({
+      Version: version,
+      Published: relativePublishDate,
+      Date: formattedPublishDate
+    })
+  );
 
   render(
     <>
@@ -64,21 +78,26 @@ export const renderInstalledPackageVersionsRecentlyPublished = async (options: P
   });
 
   const versions = installedPackages?.map((item, index) => {
-    item.publishedDate = new Date(finalResults[index]);
+    item.publishDate = new Date(finalResults[index]);
     return item;
   });
 
   const versionsSortedByPublishDate = versions.sort(
-    (a, b) => b.publishedDate.getTime() - a.publishedDate.getTime()
+    (a, b) => b.publishDate.getTime() - a.publishDate.getTime()
   );
 
   const displayedVersions = getDisplayed(versionsSortedByPublishDate, options);
 
-  const tableData = displayedVersions?.map(({name, version, publishedDate}) => ({
+  if (options.json) {
+    console.log(JSON.stringify(displayedVersions, null, 2));
+    return;
+  }
+
+  const tableData = displayedVersions?.map(({name, version, publishDate}) => ({
     Name: name,
     Version: version,
-    Published: getRelativeTimeDescription(publishedDate),
-    Date: formatDate(publishedDate)
+    Published: getRelativeTimeDescription(publishDate),
+    Date: formatDate(publishDate)
   }));
 
   render(
