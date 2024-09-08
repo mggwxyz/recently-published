@@ -21,7 +21,7 @@
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "scripts": {
-    "test": "vitest",
+    "test": "vitest run",
     "prebuild": "npm run test",
     "build": "tsup",
     "prepublishOnly": "pnpm build"
