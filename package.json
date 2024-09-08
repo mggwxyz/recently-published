@@ -1,7 +1,22 @@
 {
   "name": "recently-published",
+  "description": "A simple CLI tool to get the most recently published versions of a package on npm or see which install package versions were most recently published.",
+  "keywords": [
+    "cli",
+    "npm",
+    "package",
+    "version",
+    "recent",
+    "published"
+  ],
   "version": "0.4.0",
   "license": "MIT",
+  "homepage": "https://github.com/mggwxyz/recently-published#readme",
+  "author": {
+    "name": "Michael Gilbertson",
+    "email": "mggwxyz@gmail.com",
+    "url": "https://michaelgilbertson.io"
+  },
   "type": "module",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
