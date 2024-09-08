@@ -53,6 +53,7 @@
     "ink": "^5.0.1",
     "ink-spinner": "^5.0.0",
     "object-hash": "^3.0.0",
-    "semver": "^7.6.3"
+    "semver": "^7.6.3",
+    "validate-npm-package-name": "^5.0.1"
   }
 }

@@ -33,12 +33,12 @@ program
     'Exclude prerelease versions from the list of recently published versions'
   )
   .action(async (optionalPackageName: string, options: ProgramOptions) => {
-    // if (!validatePackageInput(optionalPackageName)) {
-    //   console.error(
-    //     'Invalid input. Please provide a valid npm package name (including scope). Versions ranges are not supported.'
-    //   );
-    //   process.exit(1); // Exit with an error code
-    // }
+    if (!validatePackageInput(optionalPackageName)) {
+      console.error(
+        'Invalid input. Please provide a valid npm package name (including scope). Versions ranges are not supported.'
+      );
+      process.exit(1); // Exit with an error code
+    }
 
     if (!optionalPackageName) {
       await renderInstalledPackageVersionsRecentlyPublished(options);

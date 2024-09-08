@@ -1,14 +1,7 @@
-import {Box, render, Text} from 'ink';
-import Spinner from 'ink-spinner';
 import semverParse from 'semver/functions/parse.js';
 import validatePackageName from 'validate-npm-package-name';
 
-import {formatDate, getRelativeTimeDescription} from './timeUtils.ts';
-import Table, {EmptySkeleton} from '../components/Table.tsx';
-import {batchProcessPromises, execPromise} from './promiseUtils.ts';
-
-import {ProgramOptions} from '../index.ts';
-import {getDisplayed} from './arrayUtils.ts';
+import {execPromise} from './promiseUtils.ts';
 
 type NPMVersionsObject = {
   [version: string]: string;
