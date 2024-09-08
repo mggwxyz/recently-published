@@ -87,7 +87,15 @@ export const renderInstalledPackageVersionsRecentlyPublished = async (options: P
     (a, b) => b.publishDate.getTime() - a.publishDate.getTime()
   );
 
-  const displayedVersions = getDisplayed(versionsSortedByPublishDate, options);
+  const displayedVersions = getDisplayed(versionsSortedByPublishDate, options).map(
+    ({name, version, publishDate}) => ({
+      name,
+      version,
+      publishDate,
+      relativePublishDate: getRelativeTimeDescription(publishDate),
+      formattedPublishDate: formatDate(publishDate)
+    })
+  );
 
   if (options.json) {
     render(null);
@@ -95,12 +103,14 @@ export const renderInstalledPackageVersionsRecentlyPublished = async (options: P
     return;
   }
 
-  const tableData = displayedVersions?.map(({name, version, publishDate}) => ({
-    Name: name,
-    Version: version,
-    Published: getRelativeTimeDescription(publishDate),
-    Date: formatDate(publishDate)
-  }));
+  const tableData = displayedVersions?.map(
+    ({name, version, relativePublishDate, formattedPublishDate}) => ({
+      Name: name,
+      Version: version,
+      Published: relativePublishDate,
+      Date: formattedPublishDate
+    })
+  );
 
   render(
     <>
