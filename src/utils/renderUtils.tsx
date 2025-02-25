@@ -61,13 +61,14 @@ export const renderPackagesRecentlyPublishedVersions = async (
 export const renderInstalledPackageVersionsRecentlyPublished = async (options: ProgramOptions) => {
   const installedPackages = await getInstalledPackagesInCurrentDirectory();
 
-  render(
+  const {unmount, clear} = render(
     <Text>
       <Text color='green'>
         <Spinner type='dots' />
       </Text>
       {' Fetching metadata for packages...'}
-    </Text>
+    </Text>,
+    {stdout: process.stderr}
   );
 
   const results = await batchProcessPromises(installedPackages, 100, ({name, version}) => {
@@ -96,6 +97,9 @@ export const renderInstalledPackageVersionsRecentlyPublished = async (options: P
       formattedPublishDate: formatDate(publishDate)
     })
   );
+
+  clear();
+  unmount();
 
   if (options.json) {
     render(null);

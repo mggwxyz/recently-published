@@ -4,7 +4,7 @@ A simple CLI tool to get the most recently published versions of a package on np
 
 ## Usage
 
-```bash
+```
 Usage: recently-published [options] [optionalPackageName]
 
 Arguments:
