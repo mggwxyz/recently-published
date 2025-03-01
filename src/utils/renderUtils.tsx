@@ -1,5 +1,9 @@
 import {ProgramOptions} from '../index.ts';
-import {filterPublishedVersions, getDisplayed} from './arrayUtils.ts';
+import {
+  filterPublishedVersions,
+  getDisplayed,
+  sortByPublishedDateThenVersion
+} from './arrayUtils.ts';
 import {formatDate, getRelativeTimeDescription} from './timeUtils.ts';
 import Table, {EmptySkeleton} from '../components/Table.tsx';
 import {
@@ -20,9 +24,7 @@ export const renderPackagesRecentlyPublishedVersions = async (
 
   const filteredPublishedVersions = filterPublishedVersions(allPublishedVersions, options);
 
-  const versionsSortedByPublishDate = filteredPublishedVersions.sort(
-    (a, b) => b.publishDate.getTime() - a.publishDate.getTime()
-  );
+  const versionsSortedByPublishDate = sortByPublishedDateThenVersion(filteredPublishedVersions);
 
   const displayedVersions = getDisplayed(versionsSortedByPublishDate, options).map(
     ({version, publishDate}) => ({
@@ -84,9 +86,7 @@ export const renderInstalledPackageVersionsRecentlyPublished = async (options: P
     return item;
   });
 
-  const versionsSortedByPublishDate = versions.sort(
-    (a, b) => b.publishDate.getTime() - a.publishDate.getTime()
-  );
+  const versionsSortedByPublishDate = sortByPublishedDateThenVersion(versions);
 
   const displayedVersions = getDisplayed(versionsSortedByPublishDate, options).map(
     ({name, version, publishDate}) => ({
