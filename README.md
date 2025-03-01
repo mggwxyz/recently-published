@@ -1,6 +1,10 @@
 # recently-published
 
-> A simple CLI tool to get the most recently published versions of a package on npm or see which installed package versions were most recently published.
+> A simple CLI tool to view which installed packages in your project were published most recently
+
+## Use Case
+
+If you install or update your packages and something breaks, you can use this CLI tool to see which versions you just installed were most recently published and hence the most suspect. 
 
 ## Installation & Usage
 
