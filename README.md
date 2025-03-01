@@ -1,10 +1,38 @@
 # recently-published
 
-A simple CLI tool to get the most recently published versions of a package on npm or see which installed package versions were most recently published.
+> A simple CLI tool to get the most recently published versions of a package on npm or see which installed package versions were most recently published.
+
+## Installation & Usage
+
+You can either install this package globally or use `npx` to run it without installation.
+
+### Global Installation
+
+To install globally, use:
+
+```sh
+npm install -g recently-published
+```
+
+Once installed, you can run it anywhere with:
+
+```sh
+recently-published <options>
+```
+
+### Using `npx`
+
+If you prefer not to install it globally, you can use `npx`:
+
+```sh
+npx recently-published <options>
+```
+
+This will fetch and run the latest version of the package without needing a global install.
 
 ## Usage
 
-```
+```text
 Usage: recently-published [options] [optionalPackageName]
 
 Arguments:
@@ -22,13 +50,13 @@ Options:
 
 ### Get 5 most recently published packages installed in the current directory
 
-```bash
-npx recently-published
+```sh
+recently-published
 ```
 
 returns
 
-```bash
+```text
  Name                       Version  Published     Date                   
  eslint                     9.10.0   46 hours ago  Fri Sep 6 2024 4:26 PM
  @eslint/js                 9.10.0   46 hours ago  Fri Sep 6 2024 4:06 PM
@@ -39,13 +67,13 @@ returns
 
 ### Get 5 most recently published versions of "react"
 
-```bash
-npx recently-published react
+```sh
+recently-published react
 ```
 
 returns
 
-```bash
+```text
  react
  Version                               Published   Date                    
  0.0.0-experimental-a03254bc-20240905  2 days ago  Fri Sep 6 2024 12:20 PM
@@ -57,13 +85,13 @@ returns
 
 ### Get 5 most recently published versions of "react" excluding prerelease versions
 
-```bash
-npx recently-published react -ep
+```sh
+recently-published react -ep
 ```
 
 returns
 
-```bash
+```text
  react
  Version  Published     Date                     
  18.3.1   4 months ago  Fri Apr 26 2024 12:42 PM
@@ -75,13 +103,13 @@ returns
 
 ### Get all published versions of "ink-spinner" sorted by publish date
 
-```bash
-npx recently-published ink-spinner -d all
+```sh
+recently-published ink-spinner -d all
 ```
 
 returns
 
-```bash
+```text
  ink-spinner
  Version  Published      Date                     
  5.0.0    18 months ago  Wed Mar 1 2023 4:04 PM
