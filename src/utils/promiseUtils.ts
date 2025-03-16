@@ -1,5 +1,6 @@
 import util from 'node:util';
 import {exec} from 'child_process';
+import pLimit from 'p-limit';
 
 export const execPromise = util.promisify(exec);
 
@@ -19,4 +20,13 @@ export async function batchProcessPromises<T>(
   }
 
   return results;
+}
+
+export async function processPromisesWithLimit<T>(
+  items: Array<T>,
+  promisesLimit: number,
+  fn: (item: T) => Promise<T>
+): Promise<T[]> {
+  const limit = pLimit(promisesLimit ?? 10);
+  return await Promise.all(items.map(item => limit(() => fn(item))));
 }

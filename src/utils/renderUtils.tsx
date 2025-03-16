@@ -11,9 +11,11 @@ import {
   getPackagesPublishedVersionsFromNPM,
   PublishedVersion
 } from './npmUtils.ts';
-import {render, Box, Text} from 'ink';
-import {batchProcessPromises, execPromise} from './promiseUtils.ts';
+import {render, Box, Text, useApp} from 'ink';
+import {batchProcessPromises, execPromise, processPromisesWithLimit} from './promiseUtils.ts';
 import Spinner from 'ink-spinner';
+import {useEffect, useState} from 'react';
+import pLimit from 'p-limit';
 
 export const renderPackagesRecentlyPublishedVersions = async (
   packageName: string,
@@ -119,6 +121,99 @@ export const renderInstalledPackageVersionsRecentlyPublished = async (options: P
   render(
     <>
       <Table data={tableData} skeleton={EmptySkeleton} />
+    </>
+  );
+};
+
+const Loading = ({count, total}: {count: number; total: number}) => {
+  return (
+    <Text>
+      <Text color='green'>
+        <Spinner type='dots' />
+      </Text>
+      {` ${total === 0 ? 'Fetching metadata for packages...' : `Fetched metadata for ${count} of ${total} packages...`}`}
+    </Text>
+  );
+};
+
+const App = ({options}: {options: ProgramOptions}) => {
+  const [packages, setPackages] = useState([]);
+  const [count, setCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [tableData, setTableData] = useState([]);
+
+  const {exit} = useApp();
+
+  useEffect(() => {
+    const getPackageVersions = async () => {
+      const installedPackages = await getInstalledPackagesInCurrentDirectory();
+      setPackages(installedPackages);
+
+      const limit = pLimit(25);
+
+      const results = await processPromisesWithLimit(installedPackages, 50, ({name, version}) => {
+        return execPromise(`npm view ${name} time'[${version}]'`).then(result => {
+          setCount(prev => prev + 1);
+          return result;
+        });
+      });
+
+      const finalResults = results.map(({stdout}) => {
+        return stdout.replace(/[\n\r]/g, '');
+      });
+
+      const versions = installedPackages?.map((item, index) => {
+        item.publishDate = new Date(finalResults[index]);
+        return item;
+      });
+
+      const versionsSortedByPublishDate = sortByPublishedDateThenVersion(versions);
+
+      const displayedVersions = getDisplayed(versionsSortedByPublishDate, options).map(
+        ({name, version, publishDate}) => ({
+          name,
+          version,
+          publishDate,
+          relativePublishDate: getRelativeTimeDescription(publishDate),
+          formattedPublishDate: formatDate(publishDate)
+        })
+      );
+
+      const data = displayedVersions?.map(
+        ({name, version, relativePublishDate, formattedPublishDate}) => ({
+          Name: name,
+          Version: version,
+          Published: relativePublishDate,
+          Date: formattedPublishDate
+        })
+      );
+
+      setIsLoading(false);
+      setTableData(data);
+
+      setTimeout(() => {
+        exit();
+      }, 2000);
+    };
+
+    getPackageVersions();
+  }, []);
+
+  return (
+    <>
+      {isLoading ? (
+        <Loading total={packages.length} count={count} />
+      ) : (
+        <Table data={tableData} skeleton={EmptySkeleton} />
+      )}
+    </>
+  );
+};
+
+export const renderApp = (options: ProgramOptions) => {
+  render(
+    <>
+      <App options={options} />
     </>
   );
 };

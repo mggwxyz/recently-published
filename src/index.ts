@@ -5,6 +5,7 @@ import * as pkg from '../package.json';
 
 import {validatePackageInput} from './utils/npmUtils.ts';
 import {
+  renderApp,
   renderInstalledPackageVersionsRecentlyPublished,
   renderPackagesRecentlyPublishedVersions
 } from './utils/renderUtils.tsx';
@@ -42,11 +43,13 @@ program
       process.exit(1); // Exit with an error code
     }
 
-    if (!optionalPackageName) {
-      await renderInstalledPackageVersionsRecentlyPublished(options);
-    } else {
-      await renderPackagesRecentlyPublishedVersions(optionalPackageName, options);
-    }
+    renderApp(options);
+
+    // if (!optionalPackageName) {
+    //   await renderInstalledPackageVersionsRecentlyPublished(options);
+    // } else {
+    //   await renderPackagesRecentlyPublishedVersions(optionalPackageName, options);
+    // }
   });
 
 program.parse(process.argv);
