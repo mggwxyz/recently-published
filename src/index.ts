@@ -6,8 +6,6 @@ import * as pkg from '../package.json';
 import {validatePackageInput} from './utils/npmUtils.ts';
 import {
   renderApp,
-  renderInstalledPackageVersionsRecentlyPublished,
-  renderPackagesRecentlyPublishedVersions
 } from './utils/renderUtils.tsx';
 
 const program = new Command();
@@ -28,7 +26,7 @@ program
   .option(
     '-d, --display <number>',
     'Number of recently published versions you would like displayed or "all" if you want to display all of them',
-    '5'
+    '10'
   )
   .option(
     '-ep, --excludePrerelease',
@@ -43,13 +41,7 @@ program
       process.exit(1); // Exit with an error code
     }
 
-    renderApp(options);
-
-    // if (!optionalPackageName) {
-    //   await renderInstalledPackageVersionsRecentlyPublished(options);
-    // } else {
-    //   await renderPackagesRecentlyPublishedVersions(optionalPackageName, options);
-    // }
+    renderApp(options, optionalPackageName);
   });
 
 program.parse(process.argv);
