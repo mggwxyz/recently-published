@@ -15,7 +15,7 @@ import {render, Box, Text, useApp} from 'ink';
 import {batchProcessPromises, execPromise, processPromisesWithLimit} from './promiseUtils.ts';
 import Spinner from 'ink-spinner';
 import {useEffect, useState} from 'react';
-import pLimit from 'p-limit';
+import {Loader} from '../components/Loader.tsx';
 
 export const renderPackagesRecentlyPublishedVersions = async (
   packageName: string,
@@ -125,17 +125,6 @@ export const renderInstalledPackageVersionsRecentlyPublished = async (options: P
   );
 };
 
-const Loading = ({count, total}: {count: number; total: number}) => {
-  return (
-    <Text>
-      <Text color='green'>
-        <Spinner type='dots' />
-      </Text>
-      {` ${total === 0 ? 'Fetching metadata for packages...' : `Fetched metadata for ${count} of ${total} packages...`}`}
-    </Text>
-  );
-};
-
 const App = ({options}: {options: ProgramOptions}) => {
   const [packages, setPackages] = useState([]);
   const [count, setCount] = useState(0);
@@ -147,11 +136,10 @@ const App = ({options}: {options: ProgramOptions}) => {
   useEffect(() => {
     const getPackageVersions = async () => {
       const installedPackages = await getInstalledPackagesInCurrentDirectory();
+
       setPackages(installedPackages);
 
-      const limit = pLimit(25);
-
-      const results = await processPromisesWithLimit(installedPackages, 50, ({name, version}) => {
+      const results = await processPromisesWithLimit(installedPackages, 100, ({name, version}) => {
         return execPromise(`npm view ${name} time'[${version}]'`).then(result => {
           setCount(prev => prev + 1);
           return result;
@@ -193,7 +181,7 @@ const App = ({options}: {options: ProgramOptions}) => {
 
       setTimeout(() => {
         exit();
-      }, 2000);
+      }, 200);
     };
 
     getPackageVersions();
@@ -202,7 +190,7 @@ const App = ({options}: {options: ProgramOptions}) => {
   return (
     <>
       {isLoading ? (
-        <Loading total={packages.length} count={count} />
+        <Loader total={packages.length} count={count} />
       ) : (
         <Table data={tableData} skeleton={EmptySkeleton} />
       )}
