@@ -74,7 +74,6 @@ typescript-eslint                8.32.1   4 days ago   Mon May 12 2025 1:19 PM
 @typescript-eslint/visitor-keys  8.32.1   4 days ago   Mon May 12 2025 1:19 PM
 semver                           7.7.2    5 days ago   Mon May 12 2025 1:02 PM
 execa                            9.5.3    8 days ago   Thu May 8 2025 4:11 PM
-
 ```
 
 ### Get 10 most recently published versions of "react"
@@ -86,31 +85,41 @@ recently-published react
 returns
 
 ```text
- react
- Version                               Published   Date                    
- 0.0.0-experimental-a03254bc-20240905  2 days ago  Fri Sep 6 2024 12:20 PM
- 19.0.0-rc-a03254bc-20240905           2 days ago  Fri Sep 6 2024 12:18 PM
- 0.0.0-experimental-4c58fce7-20240904  3 days ago  Thu Sep 5 2024 12:20 PM
- 19.0.0-rc-4c58fce7-20240904           3 days ago  Thu Sep 5 2024 12:18 PM
- 0.0.0-experimental-d1afcb43-20240903  4 days ago  Wed Sep 4 2024 12:20 PM
+react
+Version Published     Date                     
+19.1.0  49 days ago   Fri Mar 28 2025 3:59 PM
+19.0.0  5 months ago  Thu Dec 5 2024 1:10 PM
+18.3.1  12 months ago Fri Apr 26 2024 12:42 PM
+18.3.0  12 months ago Thu Apr 25 2024 12:45 PM
+18.2.0  2 years ago   Tue Jun 14 2022 3:46 PM
+18.1.0  3 years ago   Tue Apr 26 2022 4:40 PM
+18.0.0  3 years ago   Tue Mar 29 2022 12:00 PM
+17.0.2  4 years ago   Mon Mar 22 2021 5:56 PM
+17.0.1  4 years ago   Thu Oct 22 2020 8:21 AM
+17.0.0  4 years ago   Tue Oct 20 2020 4:11 PM
 ```
 
-### Get 5 most recently published versions of "react" including prerelease versions
+### Get 10 most recently published versions of "react" including prerelease versions
 
 ```sh
-recently-published react -ep
+recently-published react -ip
 ```
 
 returns
 
 ```text
- react
- Version  Published     Date                     
- 18.3.1   4 months ago  Fri Apr 26 2024 12:42 PM
- 18.3.0   4 months ago  Thu Apr 25 2024 12:45 PM
- 18.2.0   2 years ago   Tue Jun 14 2022 3:46 PM
- 18.1.0   2 years ago   Tue Apr 26 2022 4:40 PM
- 18.0.0   2 years ago   Tue Mar 29 2022 12:00 PM
+react
+Version                              Published    Date                     
+0.0.0-experimental-4448b187-20250515 24 hours ago Fri May 16 2025 12:20 PM
+19.2.0-canary-4448b187-20250515      24 hours ago Fri May 16 2025 12:18 PM
+0.0.0-experimental-4a45ba92-20250515 2 days ago   Thu May 15 2025 12:20 PM
+19.2.0-canary-4a45ba92-20250515      2 days ago   Thu May 15 2025 12:18 PM
+0.0.0-experimental-d85f86cf-20250514 3 days ago   Wed May 14 2025 12:20 PM
+19.2.0-canary-d85f86cf-20250514      3 days ago   Wed May 14 2025 12:18 PM
+0.0.0-experimental-b94603b9-20250513 4 days ago   Tue May 13 2025 12:20 PM
+19.2.0-canary-b94603b9-20250513      4 days ago   Tue May 13 2025 12:18 PM
+0.0.0-experimental-3820740a-20250509 5 days ago   Mon May 12 2025 12:20 PM
+19.2.0-canary-3820740a-20250509      5 days ago   Mon May 12 2025 12:18 PM
 ```
 
 ### Get all published versions of "ink-spinner" sorted by publish date
@@ -122,20 +131,18 @@ recently-published ink-spinner -d all
 returns
 
 ```text
- ink-spinner
- Version  Published      Date                     
- 5.0.0    18 months ago  Wed Mar 1 2023 4:04 PM
- 4.0.3    2 years ago    Tue Oct 5 2021 1:19 PM
- 4.0.2    3 years ago    Fri May 7 2021 3:09 PM
- 4.0.1    4 years ago    Tue Aug 18 2020 2:58 PM
- 4.0.0    4 years ago    Sun Jul 26 2020 3:49 PM
- 4.0.0-0  4 years ago    Tue Jun 23 2020 3:51 PM
- 3.1.0    4 years ago    Tue Jun 23 2020 3:22 PM
- 3.0.1    5 years ago    Sun Apr 14 2019 11:14 PM
- 3.0.0    5 years ago    Mon Mar 4 2019 2:59 AM
- 2.0.0    6 years ago    Sun May 20 2018 2:58 PM
- 1.0.0    7 years ago    Sat Jul 15 2017 3:10 PM
-
+ink-spinner
+Version Published   Date                     
+5.0.0   2 years ago Wed Mar 1 2023 4:04 PM
+4.0.3   3 years ago Tue Oct 5 2021 1:19 PM
+4.0.2   4 years ago Fri May 7 2021 3:09 PM
+4.0.1   4 years ago Tue Aug 18 2020 2:58 PM
+4.0.0   4 years ago Sun Jul 26 2020 3:49 PM
+3.1.0   4 years ago Tue Jun 23 2020 3:22 PM
+3.0.1   6 years ago Sun Apr 14 2019 11:14 PM
+3.0.0   6 years ago Mon Mar 4 2019 2:59 AM
+2.0.0   6 years ago Sun May 20 2018 2:58 PM
+1.0.0   7 years ago Sat Jul 15 2017 3:10 PM
 ```
 
 
