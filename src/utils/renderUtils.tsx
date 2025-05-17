@@ -75,7 +75,7 @@ const ResultView = ({
         {optionalPackageName && (
           <>
             <Box flexDirection='column'>
-              <Text color={'green'}> {optionalPackageName}</Text>
+              <Text color={'green'}>{optionalPackageName}</Text>
             </Box>
             <Spacer />
           </>

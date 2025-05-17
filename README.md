@@ -63,12 +63,18 @@ recently-published
 returns
 
 ```text
- Name                       Version  Published     Date                   
- eslint                     9.10.0   46 hours ago  Fri Sep 6 2024 4:26 PM
- @eslint/js                 9.10.0   46 hours ago  Fri Sep 6 2024 4:06 PM
- picocolors                 1.1.0    5 days ago    Mon Sep 2 2024 7:46 PM
- typescript-eslint          8.4.0    6 days ago    Mon Sep 2 2024 1:16 PM
- @typescript-eslint/parser  8.4.0    6 days ago    Mon Sep 2 2024 1:16 PM
+Name                             Version  Published    Date                     
+eslint                           9.27.0   22 hours ago Fri May 16 2025 2:54 PM
+@eslint/js                       9.27.0   22 hours ago Fri May 16 2025 2:28 PM
+tsup                             8.5.0    27 hours ago Fri May 16 2025 9:41 AM
+@types/node                      22.15.18 3 days ago   Wed May 14 2025 12:37 AM
+typescript-eslint                8.32.1   4 days ago   Mon May 12 2025 1:19 PM
+@typescript-eslint/parser        8.32.1   4 days ago   Mon May 12 2025 1:19 PM
+@typescript-eslint/scope-manager 8.32.1   4 days ago   Mon May 12 2025 1:19 PM
+@typescript-eslint/visitor-keys  8.32.1   4 days ago   Mon May 12 2025 1:19 PM
+semver                           7.7.2    5 days ago   Mon May 12 2025 1:02 PM
+execa                            9.5.3    8 days ago   Thu May 8 2025 4:11 PM
+
 ```
 
 ### Get 10 most recently published versions of "react"
