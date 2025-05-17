@@ -4,9 +4,7 @@ import {Command} from 'commander';
 import * as pkg from '../package.json';
 
 import {validatePackageInput} from './utils/npmUtils.ts';
-import {
-  renderApp,
-} from './utils/renderUtils.tsx';
+import {renderApp} from './utils/renderUtils.tsx';
 
 const program = new Command();
 
@@ -41,7 +39,7 @@ program
       process.exit(1); // Exit with an error code
     }
 
-    renderApp(options, optionalPackageName);
+    await renderApp(options, optionalPackageName);
   });
 
 program.parse(process.argv);

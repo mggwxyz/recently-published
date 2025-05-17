@@ -28,7 +28,7 @@ describe('CLI Tool Tests', () => {
     const {stdout} = await execa('tsx', ['./src/index.ts', 'request', '--json']);
     const result = JSON.parse(stdout);
     expect(extractVersionAndPublishDate(result)).toEqual(
-      extractVersionAndPublishDate(mockDataForDeprecatedRequestPackage.slice(0, 5))
+      extractVersionAndPublishDate(mockDataForDeprecatedRequestPackage.slice(0, 10))
     );
   });
 

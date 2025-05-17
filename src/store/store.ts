@@ -12,22 +12,15 @@ import {
 
 import {
   getInstalledPackagesInCurrentDirectory,
-  getPackagesPublishedVersionsFromNPM,
+  getPackagesPublishedVersionsFromNPM
 } from '../utils/npmUtils.ts';
-import { ProgramOptions } from '../index.ts';
-
-type TableRow = {
-  Name?: string;
-  Version: string;
-  Published: string;
-  Date: string;
-};
+import {ProgramOptions} from '../index.ts';
 
 type State = {
   packages: string[];
   count: number;
   isLoading: boolean;
-  tableData: TableRow[];
+  tableData: any[];
   packageName: string | null;
 };
 
@@ -35,10 +28,10 @@ type Action = {
   setPackages: (newPackages: string[]) => void;
   setCount: (newCount: number) => void;
   setIsLoading: (newIsLoading: boolean) => void;
-  setTableData: (newTableData: TableRow[]) => void;
+  setTableData: (newTableData: any[]) => void;
   setPackageName: (name: string | null) => void;
-  fetchPackages: (options: ProgramOptions) => Promise<void>;
-  fetchPackageVersions: (packageName: string, options: ProgramOptions) => Promise<void>;
+  fetchVersionsForAllNodeModules: (options: ProgramOptions) => Promise<void>;
+  fetchVersionsForSpecificPackage: (packageName: string, options: ProgramOptions) => Promise<void>;
 };
 
 export const appStore = createStore<State & Action>((set, get) => ({
@@ -52,7 +45,7 @@ export const appStore = createStore<State & Action>((set, get) => ({
   setIsLoading: newIsLoading => set({isLoading: newIsLoading}),
   setTableData: newTableData => set({tableData: newTableData}),
   setPackageName: name => set({packageName: name}),
-  fetchPackages: async (options: ProgramOptions) => {
+  fetchVersionsForAllNodeModules: async (options: ProgramOptions) => {
     const installedPackages = await getInstalledPackagesInCurrentDirectory();
 
     get().setPackages(installedPackages);
@@ -85,19 +78,10 @@ export const appStore = createStore<State & Action>((set, get) => ({
       })
     );
 
-    const data = displayedVersions?.map(
-      ({name, version, relativePublishDate, formattedPublishDate}) => ({
-        Name: name,
-        Version: version,
-        Published: relativePublishDate,
-        Date: formattedPublishDate
-      })
-    );
-
     get().setIsLoading(false);
-    get().setTableData(data);
+    get().setTableData(displayedVersions);
   },
-  fetchPackageVersions: async (packageName: string, options: ProgramOptions) => {
+  fetchVersionsForSpecificPackage: async (packageName: string, options: ProgramOptions) => {
     get().setPackageName(packageName);
     get().setIsLoading(true);
     get().setCount(0);
@@ -115,16 +99,8 @@ export const appStore = createStore<State & Action>((set, get) => ({
       })
     );
 
-    const data = displayedVersions?.map(
-      ({version, relativePublishDate, formattedPublishDate}) => ({
-        Version: version,
-        Published: relativePublishDate,
-        Date: formattedPublishDate
-      })
-    );
-
     get().setIsLoading(false);
-    get().setTableData(data);
+    get().setTableData(displayedVersions);
   }
 }));
 
