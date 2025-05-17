@@ -8,6 +8,6 @@ type_and_execute_command() {
 }
 
 # Your commands to demonstrate
-type_and_execute_command "npx recently-published"
+type_and_execute_command "npx recently-published react"
 
 exit 0

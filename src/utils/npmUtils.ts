@@ -2,6 +2,7 @@ import semverParse from 'semver/functions/parse.js';
 import validatePackageName from 'validate-npm-package-name';
 
 import {execPromise} from './promiseUtils.ts';
+import {PackageVersionRowData} from '../store/store.ts';
 
 type NPMVersionsObject = {
   [version: string]: string;
@@ -40,7 +41,9 @@ export const getPackagesPublishedVersionsFromNPM = async (packageName: string) =
   }
 };
 
-export const getInstalledPackagesInCurrentDirectory = async () => {
+export const getInstalledPackagesInCurrentDirectory = async (): Promise<
+  PackageVersionRowData[]
+> => {
   try {
     const {stdout} = await execPromise('npm list --json');
 

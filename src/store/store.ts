@@ -17,21 +17,28 @@ import {
 import {ProgramOptions} from '../index.ts';
 
 type State = {
-  packages: string[];
+  packages: PackageVersionRowData[];
   count: number;
   isLoading: boolean;
-  tableData: any[];
+  tableData: PackageVersionRowData[];
   packageName: string | null;
 };
 
 type Action = {
-  setPackages: (newPackages: string[]) => void;
+  setPackages: (newPackages: PackageVersionRowData[]) => void;
   setCount: (newCount: number) => void;
   setIsLoading: (newIsLoading: boolean) => void;
-  setTableData: (newTableData: any[]) => void;
+  setTableData: (newTableData: PackageVersionRowData[]) => void;
   setPackageName: (name: string | null) => void;
   fetchVersionsForAllNodeModules: (options: ProgramOptions) => Promise<void>;
   fetchVersionsForSpecificPackage: (packageName: string, options: ProgramOptions) => Promise<void>;
+};
+
+export type PackageVersionRowData = {
+  name: string;
+  version: string;
+  relativePublishDate: string;
+  formattedPublishDate: string;
 };
 
 export const appStore = createStore<State & Action>((set, get) => ({
