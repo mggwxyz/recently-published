@@ -139,9 +139,9 @@ export default class Table<T extends ScalarDict> extends React.Component<
       component: this.getConfig().skeleton,
       // chars
       line: ' ',
-      left: '│',
-      right: '│',
-      cross: '│'
+      left: '',
+      right: '',
+      cross: ''
     }
   });
 
@@ -152,10 +152,10 @@ export default class Table<T extends ScalarDict> extends React.Component<
     skeleton: {
       component: this.getConfig().skeleton,
       // chars
-      line: '─',
-      left: '├',
-      right: '┤',
-      cross: '┼'
+      line: ' ',
+      left: '',
+      right: '',
+      cross: ''
     }
   });
 
@@ -167,9 +167,9 @@ export default class Table<T extends ScalarDict> extends React.Component<
       component: this.getConfig().skeleton,
       // chars
       line: ' ',
-      left: '│',
-      right: '│',
-      cross: '│'
+      left: '',
+      right: '',
+      cross: ''
     }
   });
 
@@ -180,10 +180,10 @@ export default class Table<T extends ScalarDict> extends React.Component<
     skeleton: {
       component: this.getConfig().skeleton,
       // chars
-      line: '─',
-      left: '└',
-      right: '┘',
-      cross: '┴'
+      line: '',
+      left: '',
+      right: '',
+      cross: ''
     }
   });
 

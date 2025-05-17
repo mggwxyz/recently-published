@@ -93,7 +93,6 @@ export const renderApp = async (options: ProgramOptions, optionalPackageName: st
   );
 
   await waitUntilExit();
-  // clear();
 
   const {unmount} = render(
     <ResultView options={options} optionalPackageName={optionalPackageName} />,
