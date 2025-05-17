@@ -25,7 +25,7 @@ async function generateDemoGif() {
     // Record the terminal session
     console.log('Starting asciinema recording...');
     await execAsync(
-      'asciinema rec --command "../../scripts/npx-recently-published.sh" demo.cast --overwrite --rows=15 --cols=100',
+      'asciinema rec --command "../../scripts/npx-recently-published.sh" demo.cast --overwrite --rows=20 --cols=100',
       {
         cwd: 'demo/my-react-app'
       }

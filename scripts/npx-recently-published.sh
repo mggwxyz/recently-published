@@ -2,8 +2,8 @@
 
 # Function to simulate typing
 type_and_execute_command() {
-  printf "my-react-app: "
-  printf "$1" | pv -qL 10  # Adjust the number (10) to control typing speed
+#  printf "my-react-app: "
+  echo "$1" | pv -qL 10  # Adjust the number (10) to control typing speed
   eval "$1"  # Actually execute the command
 }
 
