@@ -73,7 +73,7 @@ typescript-eslint                8.32.1   4 days ago   Mon May 12 2025 1:19 PM
 @typescript-eslint/scope-manager 8.32.1   4 days ago   Mon May 12 2025 1:19 PM
 @typescript-eslint/visitor-keys  8.32.1   4 days ago   Mon May 12 2025 1:19 PM
 semver                           7.7.2    5 days ago   Mon May 12 2025 1:02 PM
-execa                            9.5.3    8 days ago   Thu May 8 2025 4:11 PM
+execa                            9.5.3    8 days ago   Thu May 8 2025 4:11
 ```
 
 ### Get 10 most recently published versions of "react"
