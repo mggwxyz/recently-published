@@ -275,14 +275,15 @@ function row<T extends ScalarDict>(config: RowConfig): (props: RowProps<T>) => J
   return props => (
     <Box flexDirection='row'>
       {/* Left */}
-      <skeleton.component>{skeleton.left}</skeleton.component>
+      {/*<skeleton.component>{skeleton.left}</skeleton.component>*/}
       {/* Data */}
       {...intersperse(
         i => {
           const key = `${props.key}-hseparator-${i}`;
 
           // The horizontal separator.
-          return <skeleton.component key={key}>{skeleton.cross}</skeleton.component>;
+          // return <skeleton.component key={key}>{skeleton.cross}</skeleton.component>;
+          return <></>;
         },
 
         // Values.
@@ -302,7 +303,7 @@ function row<T extends ScalarDict>(config: RowConfig): (props: RowProps<T>) => J
             const key = `${props.key}-cell-${column.key}`;
 
             // margins
-            const ml = config.padding;
+            const ml = 0;
             const mr = column.width - String(value).length - config.padding;
 
             return (
@@ -315,7 +316,7 @@ function row<T extends ScalarDict>(config: RowConfig): (props: RowProps<T>) => J
         })
       )}
       {/* Right */}
-      <skeleton.component>{skeleton.right}</skeleton.component>
+      {/*<skeleton.component>{skeleton.right}</skeleton.component>*/}
     </Box>
   );
 }
