@@ -2,6 +2,8 @@
 
 > A simple CLI tool to view which installed packages in your project were published most recently
 
+![](https://github.com/mggwxyz/recently-published/blob/main/demo/gifs/demo.gif)
+
 ## Use Case
 
 If you install or update your packages and something breaks, you can use this CLI tool to see which versions you just installed were most recently published and hence the most suspect. 
