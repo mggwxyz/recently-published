@@ -56,20 +56,18 @@ const ResultView = ({
     return <></>;
   }
 
-  const displayedVersions = optionalPackageName ? tableData?.map(
-    ({version, relativePublishDate, formattedPublishDate}) => ({
-      Version: version,
-      Published: relativePublishDate,
-      Date: formattedPublishDate
-    })
-  ): tableData?.map(
-    ({name, version, relativePublishDate, formattedPublishDate}) => ({
-      Name: name,
-      Version: version,
-      Published: relativePublishDate,
-      Date: formattedPublishDate
-    }));
-
+  const displayedVersions = optionalPackageName
+    ? tableData?.map(({version, relativePublishDate, formattedPublishDate}) => ({
+        Version: version,
+        Published: relativePublishDate,
+        Date: formattedPublishDate
+      }))
+    : tableData?.map(({name, version, relativePublishDate, formattedPublishDate}) => ({
+        Name: name,
+        Version: version,
+        Published: relativePublishDate,
+        Date: formattedPublishDate
+      }));
 
   return (
     <>
@@ -89,13 +87,13 @@ const ResultView = ({
 };
 
 export const renderApp = async (options: ProgramOptions, optionalPackageName: string | null) => {
-  const {clear, waitUntilExit} = render(
+  const {waitUntilExit} = render(
     <LoadingView options={options} optionalPackageName={optionalPackageName} />,
     {stdout: process.stderr}
   );
 
   await waitUntilExit();
-  clear();
+  // clear();
 
   const {unmount} = render(
     <ResultView options={options} optionalPackageName={optionalPackageName} />,
