@@ -57,19 +57,19 @@ const ResultView = ({
   }
 
   const displayedVersions = optionalPackageName ? tableData?.map(
+    ({version, relativePublishDate, formattedPublishDate}) => ({
+      Version: version,
+      Published: relativePublishDate,
+      Date: formattedPublishDate
+    })
+  ): tableData?.map(
     ({name, version, relativePublishDate, formattedPublishDate}) => ({
       Name: name,
       Version: version,
       Published: relativePublishDate,
       Date: formattedPublishDate
-    }))
-   : tableData?.map(
-      ({version, relativePublishDate, formattedPublishDate}) => ({
-        Version: version,
-        Published: relativePublishDate,
-        Date: formattedPublishDate
-      })
-    );
+    }));
+
 
   return (
     <>
