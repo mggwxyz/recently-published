@@ -52,7 +52,7 @@ Options:
 
 ## Examples
 
-### Get 5 most recently published packages installed in the current directory
+### Get 10 most recently published packages installed in the current directory
 
 ```sh
 recently-published
@@ -69,7 +69,7 @@ returns
  @typescript-eslint/parser  8.4.0    6 days ago    Mon Sep 2 2024 1:16 PM
 ```
 
-### Get 5 most recently published versions of "react"
+### Get 10 most recently published versions of "react"
 
 ```sh
 recently-published react
@@ -87,7 +87,7 @@ returns
  0.0.0-experimental-d1afcb43-20240903  4 days ago  Wed Sep 4 2024 12:20 PM
 ```
 
-### Get 5 most recently published versions of "react" excluding prerelease versions
+### Get 5 most recently published versions of "react" including prerelease versions
 
 ```sh
 recently-published react -ep

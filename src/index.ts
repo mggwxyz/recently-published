@@ -27,7 +27,7 @@ program
     '10'
   )
   .option(
-    '-ep, --excludePrerelease',
+    '-ip, --includePrerelease',
     'Exclude prerelease versions from the list of recently published versions'
   )
   .option('--json', 'Output the result in JSON format')

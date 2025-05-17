@@ -25,7 +25,8 @@
     "test": "vitest run",
     "prebuild": "npm run test",
     "build": "tsup",
-    "prepublishOnly": "pnpm build"
+    "prepublishOnly": "pnpm build",
+    "generateGif": "tsx scripts/generateDemoGif.ts"
   },
   "files": [
     "dist"
@@ -34,35 +35,37 @@
     "recently-published": "dist/index.js"
   },
   "devDependencies": {
-    "@eslint/js": "^9.22.0",
+    "@eslint/js": "^9.27.0",
     "@stylistic/eslint-plugin-ts": "^2.13.0",
     "@types/eslint-config-prettier": "^6.11.3",
     "@types/eslint__js": "^8.42.3",
+    "@types/node": "^22.15.18",
     "@types/object-hash": "^3.0.6",
-    "@types/react": "^18.3.18",
-    "@types/semver": "^7.5.8",
+    "@types/react": "^18.3.21",
+    "@types/semver": "^7.7.0",
     "@types/validate-npm-package-name": "^4.0.2",
-    "@typescript-eslint/parser": "^8.26.1",
-    "esbuild": "^0.25.1",
-    "eslint": "^9.22.0",
+    "@typescript-eslint/parser": "^8.32.1",
+    "esbuild": "^0.25.4",
+    "eslint": "^9.27.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.2.3",
-    "execa": "^9.5.2",
+    "eslint-plugin-prettier": "^5.4.0",
+    "execa": "^9.5.3",
+    "p-wait-for": "^5.0.2",
     "prettier": "3.3.3",
-    "tsup": "^8.4.0",
-    "tsx": "^4.19.3",
+    "tsup": "^8.5.0",
+    "tsx": "^4.19.4",
     "typescript": "~5.7.3",
-    "typescript-eslint": "^8.26.1",
+    "typescript-eslint": "^8.32.1",
     "vitest": "^2.1.9"
   },
   "dependencies": {
     "commander": "^12.1.0",
-    "ink": "^5.2.0",
+    "ink": "^5.2.1",
     "ink-spinner": "^5.0.0",
     "object-hash": "^3.0.0",
     "p-limit": "^6.2.0",
     "react": "^18.3.1",
-    "semver": "^7.7.1",
+    "semver": "^7.7.2",
     "validate-npm-package-name": "^5.0.1",
     "zustand": "^5.0.4"
   }

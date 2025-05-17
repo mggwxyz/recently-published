@@ -8,8 +8,9 @@
     "strict": true,
     "noEmit": true,
     "allowImportingTsExtensions": true,
-    "rootDir": "src",
+    "rootDir": ".",
     "outDir": "dist",
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals", "node"],
+    "lib": ["ES2015", "DOM"]
   }
 }
