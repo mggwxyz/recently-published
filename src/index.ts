@@ -10,7 +10,7 @@ const program = new Command();
 
 export type ProgramOptions = {
   display: string;
-  excludePrerelease: boolean;
+  includePrerelease: boolean;
   json: boolean;
 };
 
@@ -28,7 +28,7 @@ program
   )
   .option(
     '-ip, --includePrerelease',
-    'Exclude prerelease versions from the list of recently published versions'
+    'Include prerelease versions from the list of recently published versions'
   )
   .option('--json', 'Output the result in JSON format')
   .action(async (optionalPackageName: string, options: ProgramOptions) => {

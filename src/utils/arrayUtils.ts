@@ -14,7 +14,7 @@ export const filterPublishedVersions = (
   array: PublishedVersion[],
   options: ProgramOptions
 ): PublishedVersion[] => {
-  if (options.excludePrerelease) {
+  if (!options.includePrerelease) {
     return array.filter(item => Array.isArray(item.prerelease) && item.prerelease.length == 0);
   }
 
