@@ -304,7 +304,7 @@ function row<T extends ScalarDict>(config: RowConfig): (props: RowProps<T>) => J
 
             // margins
             const ml = 0;
-            const mr = column.width - String(value).length - config.padding;
+            const mr = column.width - String(value).length - config.padding + 2;
 
             return (
               /* prettier-ignore */
