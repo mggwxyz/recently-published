@@ -22,11 +22,11 @@ export async function batchProcessPromises<T>(
   return results;
 }
 
-export async function processPromisesWithLimit<T>(
-  items: Array<T>,
+export async function processPromisesWithLimit<I, O>(
+  items: Array<I>,
   promisesLimit: number,
-  fn: (item: T) => Promise<T>
-): Promise<T[]> {
+  fn: (item: I) => Promise<O>
+): Promise<O[]> {
   const limit = pLimit(promisesLimit ?? 10);
   return await Promise.all(items.map(item => limit(() => fn(item))));
 }

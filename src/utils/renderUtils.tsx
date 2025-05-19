@@ -91,7 +91,6 @@ export const renderApp = async (options: ProgramOptions, optionalPackageName: st
     <LoadingView options={options} optionalPackageName={optionalPackageName} />,
     {stdout: process.stderr}
   );
-
   await waitUntilExit();
 
   const {unmount} = render(

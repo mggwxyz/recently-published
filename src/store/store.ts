@@ -57,12 +57,15 @@ export const appStore = createStore<State & Action>((set, get) => ({
 
     get().setPackages(installedPackages);
 
-    const results = await processPromisesWithLimit(installedPackages, 100, ({name, version}) => {
-      return execPromise(`npm view ${name} time'[${version}]'`).then(result => {
+    const results = await processPromisesWithLimit(
+      installedPackages,
+      100,
+      async ({name, version}) => {
+        const result = await execPromise(`npm view ${name} time'[${version}]'`);
         get().setCount(get().count + 1);
         return result;
-      });
-    });
+      }
+    );
 
     const finalResults = results.map(({stdout}) => {
       return stdout.replace(/[\n\r]/g, '');
@@ -111,4 +114,5 @@ export const appStore = createStore<State & Action>((set, get) => ({
   }
 }));
 
-export const useAppStore = (selector: (state: State) => any) => useStore(appStore, selector);
+export const useAppStore = (selector: (state: State & Action) => State & Action) =>
+  useStore(appStore, selector);
