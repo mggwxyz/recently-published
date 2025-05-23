@@ -1,4 +1,4 @@
-import React, {type ReactNode} from 'react';
+import React from 'react';
 import {Box, Text} from 'ink';
 import {sha1} from 'object-hash';
 
@@ -278,11 +278,7 @@ function row<T extends ScalarDict>(config: RowConfig): (props: RowProps<T>) => J
       {/*<skeleton.component>{skeleton.left}</skeleton.component>*/}
       {/* Data */}
       {...intersperse(
-        i => {
-          const key = `${props.key}-hseparator-${i}`;
-
-          // The horizontal separator.
-          // return <skeleton.component key={key}>{skeleton.cross}</skeleton.component>;
+        () => {
           return <></>;
         },
 

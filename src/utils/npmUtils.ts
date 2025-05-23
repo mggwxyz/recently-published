@@ -2,13 +2,13 @@ import semverParse from 'semver/functions/parse.js';
 import validatePackageName from 'validate-npm-package-name';
 
 import {execPromise} from './promiseUtils.ts';
-import {PackageVersionRowData} from '../store/store.ts';
 
 type NPMVersionsObject = {
   [version: string]: string;
 };
 
 export type PublishedVersion = {
+  name: string;
   publishDate: Date;
   raw?: string | undefined;
   loose?: boolean | undefined;
@@ -21,7 +21,9 @@ export type PublishedVersion = {
   prerelease?: readonly (string | number)[] | undefined;
 };
 
-export const getPackagesPublishedVersionsFromNPM = async (packageName: string) => {
+export const getPackagesPublishedVersionsFromNPM = async (
+  packageName: string
+): Promise<PublishedVersion[]> => {
   try {
     const {stdout} = await execPromise(`npm view ${packageName} time --json`);
 
@@ -31,6 +33,7 @@ export const getPackagesPublishedVersionsFromNPM = async (packageName: string) =
     delete versions.modified;
 
     return Object.entries(versions).map(([version, timestamp]) => ({
+      name: packageName,
       version,
       ...semverParse(version),
       publishDate: new Date(timestamp)
@@ -41,9 +44,7 @@ export const getPackagesPublishedVersionsFromNPM = async (packageName: string) =
   }
 };
 
-export const getInstalledPackagesInCurrentDirectory = async (): Promise<
-  PackageVersionRowData[]
-> => {
+export const getInstalledPackagesInCurrentDirectory = async (): Promise<PublishedVersion[]> => {
   try {
     const {stdout} = await execPromise('npm list --json');
 

@@ -12,12 +12,13 @@ import {
 
 import {
   getInstalledPackagesInCurrentDirectory,
-  getPackagesPublishedVersionsFromNPM
+  getPackagesPublishedVersionsFromNPM,
+  PublishedVersion
 } from '../utils/npmUtils.ts';
 import {ProgramOptions} from '../index.ts';
 
 type State = {
-  packages: PackageVersionRowData[];
+  packages: PublishedVersion[];
   count: number;
   isLoading: boolean;
   tableData: PackageVersionRowData[];
@@ -25,7 +26,7 @@ type State = {
 };
 
 type Action = {
-  setPackages: (newPackages: PackageVersionRowData[]) => void;
+  setPackages: (newPackages: PublishedVersion[]) => void;
   setCount: (newCount: number) => void;
   setIsLoading: (newIsLoading: boolean) => void;
   setTableData: (newTableData: PackageVersionRowData[]) => void;
@@ -35,8 +36,9 @@ type Action = {
 };
 
 export type PackageVersionRowData = {
-  name: string;
+  name?: string;
   version: string;
+  publishDate: Date;
   relativePublishDate: string;
   formattedPublishDate: string;
 };

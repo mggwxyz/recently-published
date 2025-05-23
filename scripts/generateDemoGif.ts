@@ -1,9 +1,8 @@
 import {exec} from 'child_process';
-import {mkdir, existsSync, exists} from 'fs';
+import {mkdir, existsSync} from 'fs';
 import {promisify} from 'util';
 import pWaitFor from 'p-wait-for';
 
-const existsAsync = promisify(exists);
 const execAsync = promisify(exec);
 const mkdirAsync = promisify(mkdir);
 
