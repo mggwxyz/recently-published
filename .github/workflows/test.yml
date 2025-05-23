@@ -9,11 +9,11 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+
     strategy:
       matrix:
-        node-version: [18, 20]
-    
+        node-version: [20]
+
     steps:
     - name: Install pnpm
       uses: pnpm/action-setup@v2
@@ -25,6 +25,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'pnpm'
+
+    - name: Print working directory
+      run: pwd
 
     - name: Install dependencies
       run: pnpm install --frozen-lockfile
