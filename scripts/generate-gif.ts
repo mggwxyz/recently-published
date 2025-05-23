@@ -6,7 +6,7 @@ import pWaitFor from 'p-wait-for';
 const execAsync = promisify(exec);
 const mkdirAsync = promisify(mkdir);
 
-async function generateDemoGif() {
+async function generateGif() {
   try {
     // Create gifs directory if it doesn't exist
     if (!existsSync('demo/gifs')) {
@@ -50,4 +50,4 @@ async function generateDemoGif() {
 }
 
 // Run the script
-generateDemoGif();
+generateGif();

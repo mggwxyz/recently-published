@@ -26,7 +26,7 @@
     "prebuild": "npm run test",
     "build": "tsup",
     "prepublishOnly": "pnpm build",
-    "generateGif": "tsx scripts/generateDemoGif.ts"
+    "gif": "tsx scripts/generate-gif.ts"
   },
   "files": [
     "dist"
