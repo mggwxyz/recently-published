@@ -1,6 +1,7 @@
 # recently-published
 
 ![NPM Version](https://img.shields.io/npm/v/recently-published)
+![Tests](https://github.com/mggwxyz/recently-published/workflows/Tests/badge.svg)
 
 > A simple CLI tool to view which installed packages in your project were published most recently
 

@@ -30,9 +30,6 @@ jobs:
           node-version: 20
           cache: 'pnpm'
 
-      - name: Print working directory
-        run: pwd
-
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
