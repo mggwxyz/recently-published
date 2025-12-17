@@ -1,7 +1,7 @@
 import {createStore} from 'zustand/vanilla';
 import {useStore} from 'zustand';
 
-import {execPromise, processPromisesWithLimit} from '../utils/promiseUtils.ts';
+import {processPromisesWithLimit} from '../utils/promiseUtils.ts';
 import {formatDate, getRelativeTimeDescription} from '../utils/timeUtils.ts';
 
 import {
@@ -13,6 +13,7 @@ import {
 import {
   getInstalledPackagesInCurrentDirectory,
   getPackagesPublishedVersionsFromNPM,
+  getPublishedDateForPackageVersionFromNPM,
   PublishedVersion
 } from '../utils/npmUtils.ts';
 import {ProgramOptions} from '../index.ts';
@@ -63,18 +64,14 @@ export const appStore = createStore<State & Action>((set, get) => ({
       installedPackages,
       100,
       async ({name, version}) => {
-        const result = await execPromise(`npm view ${name} time'[${version}]'`);
+        const publishDate = await getPublishedDateForPackageVersionFromNPM(name, version);
         get().setCount(get().count + 1);
-        return result;
+        return publishDate;
       }
     );
 
-    const finalResults = results.map(({stdout}) => {
-      return stdout.replace(/[\n\r]/g, '');
-    });
-
     const versions = installedPackages?.map((item, index) => {
-      item.publishDate = new Date(finalResults[index]);
+      item.publishDate = results[index];
       return item;
     });
 
